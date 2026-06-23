@@ -64,8 +64,9 @@ class MessageService:
         messages = await self.repo.get_user_messages(user_id)
         return [await self._to_out(m, user_id, user_role) for m in messages]
 
-    async def get_conversation(self, user1_id: int, user2_id: int) -> list[MessageOut]:
-        user_role = await self._resolve_role(user1_id)
+    async def get_conversation(self, user1_id: int, user2_id: int, user_role: str | None = None) -> list[MessageOut]:
+        if user_role is None:
+            user_role = await self._resolve_role(user1_id)
         messages = await self.repo.get_conversation(user1_id, user2_id)
         return [await self._to_out(m, user1_id, user_role) for m in messages]
 

@@ -32,7 +32,8 @@ async def get_messages(
 async def get_conversation(
     other_user_id: int,
     user_id: int,
+    user_role: str | None = None,
     db: AsyncSession = Depends(get_db),
 ):
     service = MessageService(MessageRepository(db), db)
-    return await service.get_conversation(user_id, other_user_id)
+    return await service.get_conversation(user_id, other_user_id, user_role)
